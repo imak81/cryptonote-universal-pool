@@ -28,7 +28,7 @@
             },
             {
                 "port": 5555,
-                "difficulty": 2000,
+                "difficulty": 4000,
                 "desc": "高端CPU和显卡:1.5KH/S以上选用"
             },
             {
