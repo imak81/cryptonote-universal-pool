@@ -1,0 +1,108 @@
+{
+    "coin": "monero",
+    "symbol": "XMR",
+
+    "logging": {
+        "files": {
+            "level": "info",
+            "directory": "logs",
+            "flushInterval": 5
+        },
+        "console": {
+            "level": "info",
+            "colors": true
+        }
+    },
+
+    "poolServer": {
+        "enabled": true,
+        "clusterForks": "auto",
+        "poolAddress": "48Y4SoUJM5L3YXBEfNQ8bFNsvTNsqcH5Rgq8RF7BwpgvTBj2xr7CmWVanaw7L4U9MnZ4AG7U6Pn1pBhfQhFyFZ1rL1efL8z",
+        "blockRefreshInterval": 1000,
+        "minerTimeout": 900,
+        "ports": [
+            {
+                "port": 3333,
+                "difficulty": 1000,
+                "desc": "低端CPU和显卡:1KH/S选用"
+            },
+            {
+                "port": 5555,
+                "difficulty": 2000,
+                "desc": "高端CPU和显卡:1.5KH/S以上选用"
+            },
+            {
+                "port": 8888,
+                "difficulty": 10000,
+                "desc": "Hidden port",
+                "hidden": true
+            }
+        ],
+        "varDiff": {
+            "minDiff": 2,
+            "maxDiff": 80000,
+            "targetTime": 100,
+            "retargetTime": 30,
+            "variancePercent": 30,
+            "maxJump": 100
+        },
+        "shareTrust": {
+            "enabled": true,
+            "min": 10,
+            "stepDown": 3,
+            "threshold": 10,
+            "penalty": 30
+        },
+        "banning": {
+            "enabled": true,
+            "time": 600,
+            "invalidPercent": 25,
+            "checkThreshold": 30
+        }
+    },
+
+    "payments": {
+        "enabled": true,
+        "interval": 600,
+        "maxAddresses": 50,
+        "mixin": 3,
+        "transferFee": 5000000000,
+        "minPayment": 100000000000,
+        "maxTransactionAmount": 0,
+        "denomination": 100000000000
+    },
+
+    "blockUnlocker": {
+        "enabled": true,
+        "interval": 30,
+        "depth": 60,
+        "poolFee": 2,
+        "devDonation": 0.1,
+        "coreDevDonation": 0.1
+    },
+
+    "api": {
+        "enabled": true,
+        "hashrateWindow": 600,
+        "updateInterval": 30,
+        "port": 8117,
+        "blocks": 30,
+        "payments": 30,
+        "password": "your_password"
+    },
+
+    "daemon": {
+        "host": "127.0.0.1",
+        "port": 18081
+    },
+
+    "wallet": {
+        "host": "127.0.0.1",
+        "port": 8082
+    },
+
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379
+    }
+}
