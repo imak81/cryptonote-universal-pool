@@ -23,18 +23,13 @@
         "ports": [
             {
                 "port": 3333,
-                "difficulty": 100,
-                "desc": "Low end hardware"
+                "difficulty": 1000,
+                "desc": "低端CPU和显卡:1KH/S选用"
             },
             {
                 "port": 5555,
                 "difficulty": 2000,
-                "desc": "Mid range hardware"
-            },
-            {
-                "port": 7777,
-                "difficulty": 10000,
-                "desc": "High end hardware"
+                "desc": "高端CPU和显卡:1.5KH/S以上选用"
             },
             {
                 "port": 8888,
@@ -45,7 +40,7 @@
         ],
         "varDiff": {
             "minDiff": 2,
-            "maxDiff": 100000,
+            "maxDiff": 80000,
             "targetTime": 100,
             "retargetTime": 30,
             "variancePercent": 30,
@@ -89,7 +84,7 @@
     "api": {
         "enabled": true,
         "hashrateWindow": 600,
-        "updateInterval": 5,
+        "updateInterval": 30,
         "port": 8117,
         "blocks": 30,
         "payments": 30,
