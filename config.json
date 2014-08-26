@@ -1,6 +1,8 @@
 {
-    "coin": "monero",
-    "symbol": "XMR",
+    "coin": "ducknote",
+    "symbol": "XDN",
+    "coinUnits": 100000000,
+    "coinDifficultyTarget": 240,
 
     "logging": {
         "files": {
@@ -44,12 +46,16 @@
             }
         ],
         "varDiff": {
-            "minDiff": 2,
-            "maxDiff": 100000,
+            "minDiff": 100,
+            "maxDiff": 200000,
             "targetTime": 100,
             "retargetTime": 30,
             "variancePercent": 30,
             "maxJump": 100
+        },
+        "fixedDiff": {
+            "enabled": true,
+            "addressSeparator": "."
         },
         "shareTrust": {
             "enabled": true,
@@ -83,7 +89,8 @@
         "depth": 60,
         "poolFee": 2,
         "devDonation": 0.1,
-        "coreDevDonation": 0.1
+        "coreDevDonation": 0.1,
+        "extraFeaturesDevDonation":0.1
     },
 
     "api": {
@@ -98,7 +105,7 @@
 
     "daemon": {
         "host": "127.0.0.1",
-        "port": 18081
+        "port": 42081
     },
 
     "wallet": {
@@ -109,5 +116,62 @@
     "redis": {
         "host": "127.0.0.1",
         "port": 6379
+    },
+
+    "monitoring": {
+        "daemon": {
+            "checkInterval": 60,
+            "rpcMethod": "getblockcount"
+        },
+        "wallet": {
+            "checkInterval": 60,
+            "rpcMethod": "getbalance"
+        }
+    },
+
+    "charts": {
+        "pool": {
+            "hashrate": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "workers": {
+                "enabled": true,
+                "updateInterval": 60,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "difficulty": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            },
+            "price": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            },
+            "profit": {
+                "enabled": true,
+                "updateInterval": 1800,
+                "stepInterval": 10800,
+                "maximumPeriod": 604800
+            }
+        },
+        "user": {
+            "hashrate": {
+                "enabled": true,
+                "updateInterval": 180,
+                "stepInterval": 1800,
+                "maximumPeriod": 86400
+            },
+            "payments": {
+                "enabled": true
+            }
+        }
     }
 }

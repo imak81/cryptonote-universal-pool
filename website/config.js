@@ -9,7 +9,7 @@ var coinNetworkDiff = 60;
 var coinResl = 16;
 //12位数为以上默认值60和16、如果是8位数，一般取值为 240和160000
 
-var irc = "irc.freenode.net/#monero";
+var irc = "irc.freenode.net/#nomp.freeyy.me";
 
 var email = "mapleshadow@gmail.com";
 
@@ -20,3 +20,5 @@ var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/relea
 var blockchainExplorer = "http://chainradar.com/{symbol}/block/{id}";
 
 var transactionExplorer = "http://chainradar.com/{symbol}/transaction/{id}";
+
+var themeCss = "themes/default-theme.css";

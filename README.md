@@ -1,7 +1,7 @@
 cryptonote-universal-pool
 ====================
 
-High performance Node.js (with native C addons) mining pool for CryptoNote based coins such as Bytecoin, Monero, QuazarCoin, HoneyPenny, etc..
+High performance Node.js (with native C addons) mining pool for CryptoNote based coins such as Bytecoin, DuckNote, Monero, QuazarCoin, HoneyPenny, etc..
 Comes with lightweight example front-end script which uses the pool's AJAX API.
 
 
@@ -27,7 +27,7 @@ Comes with lightweight example front-end script which uses the pool's AJAX API.
 * [License](#license)
 
 
-#### Features
+#### Basic features
 
 * TCP (stratum-like) protocol for server-push based jobs
   * Compared to old HTTP protocol, this has a higher hash rate, lower network/CPU server load, lower orphan
@@ -52,24 +52,37 @@ Comes with lightweight example front-end script which uses the pool's AJAX API.
   * Each miners' individual stats (hashrate, shares submitted, pending balance, total paid, etc)
   * Blocks found (pending, confirmed, and orphaned)
 * An easily extendable, responsive, light-weight front-end using API to display data
-* Worker login validation (make sure miners are using proper wallet addresses for mining)
+
+#### Extra features
+
+* Admin panel
+  * Aggregated pool statistics
+  * Coin daemon & wallet RPC services stability monitoring
+  * Log files data access
+  * Users list with detailed statistics
+* Historic charts of pool's hashrate and miners count, coin difficulty, rates and coin profitability
+* Historic charts of users's hashrate and payments
+* Miner login(wallet address) validation
+* Five configurable CSS themes
+* Universal blocks and transactions explorer based on [chainradar.com](http://chainradar.com)
+* FantomCoin & MonetaVerde support
+* Set fixed difficulty on miner client by passing "address" param with ".[difficulty]" postfix
+* Prevent "transaction is too big" error with "payments.maxTransactionAmount" option
 
 
 ### Community / Support
 
+* [CryptoNote Technology](https://cryptonote.org)
 * [CryptoNote Forum](https://forum.cryptonote.org/)
-* [Bytecoin Github](https://github.com/amjuarez/bytecoin)
-* [Monero Github](https://github.com/monero-project/bitmonero)
-* [Monero Announcement Thread](https://bitcointalk.org/index.php?topic=583449.0)
-* IRC (freenode)
-  * Support / general discussion join #monero: https://webchat.freenode.net/?channels=#monero
-  * Development discussion join #monero-dev: https://webchat.freenode.net/?channels=#monero-dev
-
+* [CryptoNote Universal Pool Forum](https://bitcointalk.org/index.php?topic=705509)
 
 #### Pools Using This Software
 
+* http://extremepool.org
 * http://xminingpool.com
-
+* http://noclaymorefee.com
+* http://nicepool.org
+* https://yaymining.com
 
 Usage
 ===
@@ -112,22 +125,19 @@ npm update
 #### 2) Configuration
 
 
-*Warning for Cyrptonote coins other than Monero:* this software may or may not work with any given cryptonote coin.
-Be wary of altcoins that change the number of minimum coin units because you will have to reconfigure several config
-values to account for those changes. Unless you're offering a bounty reward - do not open an issue asking for help
-getting a coin other than Monero working with this software.
-
-
-Copy the `config_example.json` file to `config.json` then overview each options and change any to match your preferred setup.
-
-
 Explanation for each field:
 ```javascript
 /* Used for storage in redis so multiple coins can share the same redis instance. */
-"coin": "monero",
+"coin": "ducknote",
 
 /* Used for front-end display */
-"symbol": "MRO",
+"symbol": "XDN",
+
+/* Minimum units in a single coin, see COIN constant in DAEMON_CODE/src/cryptonote_config.h */
+"coinUnits": 100000000,
+
+/* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
+"coinDifficultyTarget": 240,
 
 "logging": {
 
@@ -163,7 +173,7 @@ Explanation for each field:
     "clusterForks": "auto",
 
     /* Address where block rewards go, and miner payments come from. */
-    "poolAddress": "4AsBy39rpUMTmgTUARGq2bFQWhDhdQNekK5v4uaLU699NPAnx9CubEJ82AkvD5ScoAZNYRwBxybayainhyThHAZWCdKmPYn"
+    "poolAddress": "ddehi53dwGSBEXdhTYtga2R3fS4y9hRz4YHAsLABJpH75yUd5EDQmuL3yDBj1mG6MMeDfydY9vp4zFVVNQ99FTYq2PpsFJP2y"
 
     /* Poll RPC daemons for new blocks every this many milliseconds. */
     "blockRefreshInterval": 1000,
@@ -199,6 +209,13 @@ Explanation for each field:
         "retargetTime": 30, //Check to see if we should retarget every this many seconds
         "variancePercent": 30, //Allow time to very this % from target without retargeting
         "maxJump": 100 //Limit diff percent increase/decrease in a single retargetting
+    },
+
+    /* Set difficulty on miner client side by passing <address> param with .<difficulty> postfix
+       minerd -u 4AsBy39rpUMTmgTUARGq2bFQWhDhdQNekK5v4uaLU699NPAnx9CubEJ82AkvD5ScoAZNYRwBxybayainhyThHAZWCdKmPYn.5000 */
+    "fixedDiff": {
+        "enabled": true,
+        "separator": ".", // character separator between <address> and <difficulty>
     },
 
     /* Feature to trust share difficulties from miners which can
@@ -275,6 +292,63 @@ Explanation for each field:
     "host": "127.0.0.1",
     "port": 6379
 }
+
+/* Monitoring RPC services. Statistics will be displayed in Admin panel */
+"monitoring": {
+    "daemon": {
+        "checkInterval": 60, //interval of sending rpcMethod request
+        "rpcMethod": "getblockcount" //RPC method name
+    },
+    "wallet": {
+        "checkInterval": 60,
+        "rpcMethod": "getbalance"
+    }
+
+/* Collect pool statistics to display in frontend charts  */
+"charts": {
+    "pool": {
+        "hashrate": {
+            "enabled": true, //enable data collection and chart displaying in frontend
+            "updateInterval": 60, //how often to get current value
+            "stepInterval": 1800, //chart step interval calculated as average of all updated values
+            "maximumPeriod": 86400 //chart maximum periods (chart points number = maximumPeriod / stepInterval = 48)
+        },
+        "workers": {
+            "enabled": true,
+            "updateInterval": 60,
+            "stepInterval": 1800, //chart step interval calculated as maximum of all updated values
+            "maximumPeriod": 86400
+        },
+        "difficulty": {
+            "enabled": true,
+            "updateInterval": 1800,
+            "stepInterval": 10800,
+            "maximumPeriod": 604800
+        },
+        "price": { //USD price of one currency coin received from cryptonator.com/api
+            "enabled": true,
+            "updateInterval": 1800,
+            "stepInterval": 10800,
+            "maximumPeriod": 604800
+        },
+        "profit": { //Reward * Rate / Difficulty
+            "enabled": true,
+            "updateInterval": 1800,
+            "stepInterval": 10800,
+            "maximumPeriod": 604800
+        }
+    },
+    "user": { //chart data displayed in user stats block
+        "hashrate": {
+            "enabled": true,
+            "updateInterval": 180,
+            "stepInterval": 1800,
+            "maximumPeriod": 86400
+        },
+        "payments": { //payment chart uses all user payments data stored in DB
+            "enabled": true
+        }
+    }
 ```
 
 #### 3) [Optional] Configure cryptonote-easy-miner for your pool
@@ -332,20 +406,17 @@ Variable explanations:
 /* Must point to the API setup in your config.json file. */
 var api = "http://poolhost:8117";
 
-/* Minimum units in a single coin, for Bytecoin its 100000000. */
-var coinUnits = 1000000000000;
-
 /* Pool server host to instruct your miners to point to.  */
-var poolHost = "cryppit.com";
+var poolHost = "poolhost.com";
 
 /* IRC Server and room used for embedded KiwiIRC chat. */
-var irc = "irc.freenode.net/#monero";
+var irc = "irc.freenode.net/#ducknote";
 
 /* Contact email address. */
-var email = "support@cryppit.com";
+var email = "support@poolhost.com";
 
 /* Market stat display params from https://www.cryptonator.com/widget */
-var cryptonatorWidget = ["XMR-BTC", "XMR-USD", "XMR-EUR", "XMR-GBP"];
+var cryptonatorWidget = ["XDN-BTC", "XDN-USD", "XDN-EUR"];
 
 /* Download link to cryptonote-easy-miner for Windows users. */
 var easyminerDownload = "https://github.com/zone117x/cryptonote-easy-miner/releases/";
@@ -356,6 +427,8 @@ var blockchainExplorer = "http://chainradar.com/{symbol}/block/{id}";
 /* Used by front-end transaction links. */
 var transactionExplorer = "http://chainradar.com/{symbol}/transaction/{id}";
 
+/* Any custom CSS theme for pool frontend */
+var themeCss = "themes/default-theme.css";
 
 ```
 
