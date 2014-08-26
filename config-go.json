@@ -6,9 +6,9 @@
 
     "logging": {
         "files": {
-            "level": "info",
+            "level": "error",
             "directory": "logs",
-            "flushInterval": 5
+            "flushInterval": 3600
         },
         "console": {
             "level": "info",
