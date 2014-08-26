@@ -1,17 +1,17 @@
 {
 /* Used for storage in redis so multiple coins can share the same redis instance. */
-/*在Redis的用于存储使多个硬币可以共享同一个Redis的实例。*/
+/* 在Redis的用于存储使多个硬币可以共享同一个Redis的实例。*/
 "coin": "ducknote",
 
 /* Used for front-end display */
 "symbol": "XDN",
 
 /* Minimum units in a single coin, see COIN constant in DAEMON_CODE/src/cryptonote_config.h */
-/*的最小单位，一个硬币，见硬币常数DAEMON_CODE / src目录/ cryptonote_config.h */
+/* 的最小单位，一个硬币，见硬币常数DAEMON_CODE / src目录/ cryptonote_config.h */
 "coinUnits": 100000000,
 
 /* Coin network time to mine one block, see DIFFICULTY_TARGET constant in DAEMON_CODE/src/cryptonote_config.h */
-/ *硬币网络时间挖掘一个街区，看到DAEMON_CODE / src目录/ cryptonote_config.h * /
+/* 硬币网络时间挖掘一个街区，看到DAEMON_CODE / src目录/ cryptonote_config.h */
 "coinDifficultyTarget": 240,
 
 "logging": {
@@ -88,11 +88,10 @@
 
     /* Set difficulty on miner client side by passing <address> param with .<difficulty> postfix
        minerd -u 4AsBy39rpUMTmgTUARGq2bFQWhDhdQNekK5v4uaLU699NPAnx9CubEJ82AkvD5ScoAZNYRwBxybayainhyThHAZWCdKmPYn.5000 */
-    / *设置难度对矿工的客户端通过传递<地址>参数与<难度>后缀。*/
+    /* 设置难度对矿工的客户端通过传递<地址>参数与<难度>后缀。*/
     "fixedDiff": {
         "enabled": true,
-        "addressSeparator": ".", // character separator between <address> and <difficulty>
-                                 // <地址之间的字符分隔符>和<难度> 
+        "addressSeparator": ".", // character separator between <address> and <difficulty> <地址之间的字符分隔符>和<难度> 
     },
 
     /* Feature to trust share difficulties from miners which can
@@ -136,12 +135,12 @@
 
     /* Block depth required for a block to unlocked/mature. Found in daemon source as
        the variable CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW */
-/* 所需的块深度解锁/成熟。在后台程序源代码中找到的变量CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW */
+    /* 所需的块深度解锁/成熟。在后台程序源代码中找到的变量CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW */
         "depth": 60,
         "poolFee": 2, //1.8% pool fee (2% total fee total including donations) 矿池手续费
         "devDonation": 0.1, //0.1% donation to send to pool dev - only works with Monero 矿池开发费仅适用于xmr
         "coreDevDonation": 0.1 //0.1% donation to send to core devs - only works with Monero 硬币开发费仅适用于xmr
-        "extraFeaturesDevDonation":0.1 //扩展手续费
+        "extraFeaturesDevDonation":0.1 // 扩展手续费
 },
 
 /* AJAX API used for front-end website. */
@@ -152,7 +151,7 @@
     "port": 8117,
     "blocks": 30, //amount of blocks to send at a time
     "payments": 30, //amount of payments to send at a time
-    "password": "test" //password required for admin stats API访问密码
+    "password": "test" //password required for admin stats //API访问密码
 },
 
 /* Coin daemon connection details. */
