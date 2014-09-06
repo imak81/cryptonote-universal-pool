@@ -76,7 +76,7 @@
         "enabled": true,
         "interval": 600,
         "maxAddresses": 50,
-        "mixin": 3,
+        "mixin": 1,
         "transferFee": 5000000000,
         "minPayment": 100000000000,
         "maxTransactionAmount": 0,
